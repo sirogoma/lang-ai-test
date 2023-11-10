@@ -14,26 +14,33 @@ export default function Page() {
   }, [talkLogs]);
 
   return (
-    <>
-      <h1>Chat</h1>
+    <div className="m-4">
+      <h1 className="font-extrabold text-xl">教えてAI21</h1>
+      <hr className="border border-black" />
       <div>
         {dispTalkLogs.map((talk, index) => {
           return (
-            <div key={index}>
-              <li>質問：{talk.question}</li>
-              <li>回答：{talk.reply}</li>
+            <div key={index} className="mt-8">
+              <li className="list-none font-bold">{talk.question}</li>
+              <li className="list-none text-sm">＞ {talk.reply}</li>
             </div>
           );
         })}
       </div>
-      <div>
+      <div className="mt-4 w-max">
         <input
           type="text"
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
+          className="border border-slate-500 p-1 w-80"
         />
-        <button onClick={() => send(questionText)}>Send</button>
+        <button
+          onClick={() => send(questionText)}
+          className="border border-slate-500 bg-slate-400 font-bold py-1 px-2"
+        >
+          Send
+        </button>
       </div>
-    </>
+    </div>
   );
 }

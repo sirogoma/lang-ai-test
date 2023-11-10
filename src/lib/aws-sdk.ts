@@ -30,7 +30,7 @@ export const runAi21 = async (prompt: string): Promise<string> => {
 
   const bodyJson = {
     prompt: prompt,
-    maxTokens: 10,
+    maxTokens: 20,
   };
 
   const bodyString = JSON.stringify(bodyJson);
@@ -50,6 +50,7 @@ export const runAi21 = async (prompt: string): Promise<string> => {
     await client // 本当に叩くとお金がかかるので、JSONの型がわかったので答えを抜くだけにする
       .send(command)
       .then((data) => {
+        console.log(data.body);
         const resultString = data.body.transformToString();
         const resultJson = JSON.parse(resultString);
         result = resultJson.completions[0].data.text;

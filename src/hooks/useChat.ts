@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { runAi21 } from "../lib/aws-sdk";
 
@@ -17,10 +16,9 @@ export const useChat = () => {
 
     const set: questionSet = { question: question, reply: result };
 
-    const copy = talkLogs;
-    copy.push(set);
-    setTalkLogs(copy);
-    console.log(copy);
+    // talkLogsのコピーを作成し、新しい発言を追加
+    const updatedTalkLogs = [...talkLogs, set];
+    setTalkLogs(updatedTalkLogs);
   };
 
   return { talkLogs, setTalkLogs, send };

@@ -5,20 +5,8 @@ import {
   InvokeModelCommandInput,
 } from "@aws-sdk/client-bedrock-runtime";
 
-const aws_access_key_id = "HOGEFUGA";
-const aws_secret_access_key = "HOGEFUGA";
-
-export const getCredentials = async () => {
-  console.log("hoge");
-
-  await config.getCredentials(function (err) {
-    if (err) console.log(err.stack);
-    // credentials not loaded
-    else {
-      console.log("Access key:", config.credentials?.accessKeyId);
-    }
-  });
-};
+const aws_access_key_id = process.env.AWS_ACCESS_KEY_ID as string;
+const aws_secret_access_key = process.env.AWS_SECRET_ACCESS_KEY as string;
 
 export const runAi21 = async (prompt: string): Promise<string> => {
   const client = new BedrockRuntime({
@@ -29,21 +17,23 @@ export const runAi21 = async (prompt: string): Promise<string> => {
     },
   });
 
+  // const bodyJson = {
+  //   prompt: prompt,
+  //   maxTokens: 200,
+  //   temperature: 0,
+  //   topP: 250,
+  //   stop_sequences: [],
+  //   countPenalty: { scale: 0 },
+  //   presencePenalty: { scale: 0 },
+  //   frequencyPenalty: { scale: 0 },
+  // };
+
   const bodyJson = {
     prompt: prompt,
-    maxTokens: 200,
-    temperature: 0,
-    topP: 250,
-    stop_sequences: [],
-    countPenalty: { scale: 0 },
-    presencePenalty: { scale: 0 },
-    frequencyPenalty: { scale: 0 },
+    maxTokens: 10,
   };
 
-  //const bodyString =
-  //('{"prompt":"this is where you place your input text","maxTokens":200,"temperature":0,"topP":250,"stop_sequences":[],"countPenalty":{"scale":0},"presencePenalty":{"scale":0},"frequencyPenalty":{"scale":0}}"');
-
-  const bodyString = `{"prompt":"${prompt}","maxTokens":10}`;
+  const bodyString = JSON.stringify(bodyJson);
 
   const params: InvokeModelCommandInput = {
     modelId: "ai21.j2-mid-v1",

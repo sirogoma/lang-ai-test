@@ -9,19 +9,20 @@ export default function Page() {
   const [dispTalkLogs, setDispTalkLogs] = useState(initState);
 
   useEffect(() => {
+    console.log("useEffect");
     setDispTalkLogs([...talkLogs]);
-  });
+  }, [talkLogs]);
 
   return (
     <>
       <h1>Chat</h1>
       <div>
-        {dispTalkLogs.map((talk) => {
+        {dispTalkLogs.map((talk, index) => {
           return (
-            <>
-              <li>{talk.question}</li>
-              <li>{talk.reply}</li>
-            </>
+            <div key={index}>
+              <li>質問：{talk.question}</li>
+              <li>回答：{talk.reply}</li>
+            </div>
           );
         })}
       </div>
